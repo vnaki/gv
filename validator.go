@@ -310,11 +310,7 @@ func (vd *Validator) RangeFloat (num float64, array []float64) *Message {
  * regular expression matching
  */
 func (vd *Validator) Match (pattern string, str string) *Message {
-	m := NewMessage(regexp.MustCompile(pattern).MatchString(str))
-
-	vd.Messages = append(vd.Messages, m)
-
-	return m
+	return vd.MatchBool(regexp.MustCompile(pattern).MatchString(str));
 }
 
 /**
@@ -333,7 +329,12 @@ func (vd *Validator) MatchBool (bool bool) *Message {
  */
 func (vd *Validator) Validate () (bool, string) {
 	m := vd.GetMessages()
-	return len(m) == 0, m[0]
+
+	if len(m) == 0 {
+		return true, ""
+	}
+
+	return false, m[0]
 }
 
 /**
