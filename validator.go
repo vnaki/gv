@@ -261,7 +261,7 @@ func (vd *Validator) Float (num string) *Message {
 /**
  * validate chinese characters
  */
-func (vd *Validator) Chinese (str) *Message {
+func (vd *Validator) Chinese (str string) *Message {
 	return vd.Match(`^[\u4e00-\u9fa5]+$`, str)
 }
 
