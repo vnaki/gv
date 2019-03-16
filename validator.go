@@ -247,15 +247,22 @@ func (vd *Validator) Negative(num string) *Message {
 /**
  * validate string & positive number (>0)
  */
-func (vd *Validator) Positive(num string) *Message {
+func (vd *Validator) Positive (num string) *Message {
 	return vd.Match(`^[1-9]\d*$`, num)
 }
 
 /**
  * validate string & float number
  */
-func (vd *Validator) Float(num string) *Message {
+func (vd *Validator) Float (num string) *Message {
 	return vd.Match(`^-?\d+\.\d+$`, num)
+}
+
+/**
+ * validate chinese characters
+ */
+func (vd *Validator) Chinese (str) *Message {
+	return vd.Match(`^[\u4e00-\u9fa5]+$`, str)
 }
 
 /**
