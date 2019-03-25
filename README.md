@@ -2,6 +2,50 @@
 
 GV验证器主要用于添加数据或更新数据时对数据格式进行验证，以下列出GV的使用方法，非常容易理解和上手：
 
+
+##### 用法
+
+>在数据模型验证数据,如
+
+```go
+
+// 系统配置模型
+type SysConfig struct {
+	Id        int64
+	Title     string    `xorm:"varchar(255)"`
+	Name      string    `xorm:"unique"`
+	Value     string    `xorm:"varchar(255)"`
+	Tag       string    `xorm:"varchar(255)"`
+	Sort      int64     `xorm:"tinyint(5)"`
+	Status    int64     `xorm:"tinyint(1)"`
+	UpdatedAt time.Time `xorm:"updated"`
+}
+
+//验证逻辑
+func (m SysConfig) Validate() (bool, string) {
+	vd := gv.NewValidator()
+
+	vd.Size(m.Title, 1, 20).Message("配置名称1至20个字符!")
+
+	vd.MaxSize(m.Name, 20).Message("配置标识不超过20字符!")
+	vd.AlphaDash(m.Name).Message("配置标识由数字、字母和下划线组成!")
+	vd.MatchBool(false == m.ExistByName()).Message("配置标识已存在!")
+
+	vd.MaxSize(m.Value, 65535).Message("配置值不超过65535个字符!")
+
+	vd.Require(m.Tag).Message("配置标签不能为空!")
+	vd.AlphaDash(m.Tag).Message("配置标签由数字、字母和下划线组成!")
+	vd.MaxSize(m.Tag, 20).Message("配置标签不超过20个字符!")
+
+	vd.MinInt64(m.Sort, 0).Message("排序值不能小于0!")
+	vd.MaxInt64(m.Sort, 65535).Message("排序值不大于65535!")
+
+	vd.RangeInt(int(m.Status), []int{0, 1}).Message("状态值不正确!")
+
+	return vd.Validate()
+}
+```
+
 ##### 实例化验证器
 
 ```go
