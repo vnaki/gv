@@ -29,7 +29,6 @@ func (m SysConfig) Validate() (bool, string) {
 
 	vd.MaxSize(m.Name, 20).Message("配置标识不超过20字符!")
 	vd.AlphaDash(m.Name).Message("配置标识由数字、字母和下划线组成!")
-	vd.MatchBool(false == m.ExistByName()).Message("配置标识已存在!")
 
 	vd.MaxSize(m.Value, 65535).Message("配置值不超过65535个字符!")
 
