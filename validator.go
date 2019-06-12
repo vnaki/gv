@@ -3,21 +3,21 @@ package gv
 import "regexp"
 
 type Message struct {
-	ok bool
+	ok    bool
 	value string
 }
 
 /**
  * create a new message
  */
-func NewMessage (ok bool) *Message {
-	return &Message{ok:ok, value:"Please set the prompt message!"}
+func NewMessage(ok bool) *Message {
+	return &Message{ok: ok, value: "Please set the prompt message!"}
 }
 
 /**
  * set the message content
  */
-func (m *Message) Message (v string) {
+func (m *Message) Message(v string) {
 	m.value = v
 }
 
@@ -28,21 +28,21 @@ type Validator struct {
 /**
  * create a default validator
  */
-func NewValidator () *Validator {
-	return &Validator{Messages:[]*Message{}}
+func NewValidator() *Validator {
+	return &Validator{Messages: []*Message{}}
 }
 
 /**
  * Requirements are not empty strings
  */
-func (vd *Validator) Require (str string) *Message {
+func (vd *Validator) Require(str string) *Message {
 	return vd.MatchBool(str != "")
 }
 
 /**
  * string min & max length
  */
-func (vd *Validator) Size (v string, minSize int, maxSize int) *Message {
+func (vd *Validator) Size(v string, minSize int, maxSize int) *Message {
 	l := len(v)
 	return vd.MatchBool(l >= minSize && l <= maxSize)
 }
@@ -50,119 +50,119 @@ func (vd *Validator) Size (v string, minSize int, maxSize int) *Message {
 /**
  * string min length
  */
-func (vd *Validator) MinSize (v string, minSize int) *Message {
+func (vd *Validator) MinSize(v string, minSize int) *Message {
 	return vd.MatchBool(len(v) >= minSize)
 }
 
 /**
  * string max length
  */
-func (vd *Validator) MaxSize (v string, maxSize int) *Message {
+func (vd *Validator) MaxSize(v string, maxSize int) *Message {
 	return vd.MatchBool(len(v) <= maxSize)
 }
 
 /**
  * number min value
  */
-func (vd *Validator) MinInt (num int, min int) *Message {
+func (vd *Validator) MinInt(num int, min int) *Message {
 	return vd.MatchBool(num >= min)
 }
 
 /**
  * number max value
  */
-func (vd *Validator) MaxInt (num int, max int) *Message {
+func (vd *Validator) MaxInt(num int, max int) *Message {
 	return vd.MatchBool(num <= max)
 }
 
 /**
  * number min value
  */
-func (vd *Validator) MinInt8 (num int8, min int8) *Message {
+func (vd *Validator) MinInt8(num int8, min int8) *Message {
 	return vd.MatchBool(num >= min)
 }
 
 /**
  * number max value
  */
-func (vd *Validator) MaxInt8 (num int8, max int8) *Message {
+func (vd *Validator) MaxInt8(num int8, max int8) *Message {
 	return vd.MatchBool(num <= max)
 }
 
 /**
  * number max value
  */
-func (vd *Validator) MinInt16 (num int16, min int16) *Message {
+func (vd *Validator) MinInt16(num int16, min int16) *Message {
 	return vd.MatchBool(num >= min)
 }
 
 /**
  * number max value
  */
-func (vd *Validator) MaxInt16 (num int16, max int16) *Message {
-	return vd.MatchBool(num <= max)
-}
-
-/**
- * number min value
- */
-func (vd *Validator) MinInt32 (num int32, min int32) *Message {
-	return vd.MatchBool(num >= min)
-}
-
-/**
- * number max value
- */
-func (vd *Validator) MaxInt32 (num int32, max int32) *Message {
+func (vd *Validator) MaxInt16(num int16, max int16) *Message {
 	return vd.MatchBool(num <= max)
 }
 
 /**
  * number min value
  */
-func (vd *Validator) MinInt64 (num int64, min int64) *Message {
+func (vd *Validator) MinInt32(num int32, min int32) *Message {
 	return vd.MatchBool(num >= min)
 }
 
 /**
  * number max value
  */
-func (vd *Validator) MaxInt64 (num int64, max int64) *Message {
+func (vd *Validator) MaxInt32(num int32, max int32) *Message {
 	return vd.MatchBool(num <= max)
 }
 
 /**
  * number min value
  */
-func (vd *Validator) MinFloat32 (num float32, min float32) *Message {
+func (vd *Validator) MinInt64(num int64, min int64) *Message {
 	return vd.MatchBool(num >= min)
 }
 
 /**
  * number max value
  */
-func (vd *Validator) MaxFloat32 (num float32, max float32) *Message {
+func (vd *Validator) MaxInt64(num int64, max int64) *Message {
 	return vd.MatchBool(num <= max)
 }
 
 /**
  * number min value
  */
-func (vd *Validator) MinFloat64 (num float64, min float64) *Message {
+func (vd *Validator) MinFloat32(num float32, min float32) *Message {
 	return vd.MatchBool(num >= min)
 }
 
 /**
  * number max value
  */
-func (vd *Validator) MaxFloat64 (num float64, max float64) *Message {
+func (vd *Validator) MaxFloat32(num float32, max float32) *Message {
+	return vd.MatchBool(num <= max)
+}
+
+/**
+ * number min value
+ */
+func (vd *Validator) MinFloat64(num float64, min float64) *Message {
+	return vd.MatchBool(num >= min)
+}
+
+/**
+ * number max value
+ */
+func (vd *Validator) MaxFloat64(num float64, max float64) *Message {
 	return vd.MatchBool(num <= max)
 }
 
 /**
  * validate email
  */
-func (vd *Validator) Email (email string) *Message {
+func (vd *Validator) Email(email string) *Message {
 	return vd.Match(`^[[:alnum:]]+(-[[:alnum:]]+)*@[[:alnum:]]+(\.[[:alpha:]]+){1,2}$`, email)
 }
 
@@ -183,7 +183,7 @@ func (vd *Validator) ZipCode(code string) *Message {
 /**
  * validate ipv4 address
  */
-func (vd *Validator) IPv4 (ipv4 string) *Message {
+func (vd *Validator) IPv4(ipv4 string) *Message {
 	return vd.Match(`^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$`, ipv4)
 }
 
@@ -212,21 +212,21 @@ func (vd *Validator) Datetime(datetime string) *Message {
 /**
  * validate letter(A-Z or a-z)
  */
-func (vd *Validator) Letter (str string) *Message {
+func (vd *Validator) Letter(str string) *Message {
 	return vd.Match(`^[[:alpha:]]+$`, str)
 }
 
 /**
  * validate number or letter (0-9 or A-Z or a-z)
  */
-func (vd *Validator) Alpha (str string) *Message {
+func (vd *Validator) Alpha(str string) *Message {
 	return vd.Match(`^[[:alnum:]]+$`, str)
 }
 
 /**
  * validate complex string, by number(0-9) or letter (A-Za-z) or underline(_)
  */
-func (vd *Validator) AlphaDash (str string) *Message {
+func (vd *Validator) AlphaDash(str string) *Message {
 	return vd.Match(`^[[:alnum:]]+(_[[:alnum:]]+)*$`, str)
 }
 
@@ -247,28 +247,28 @@ func (vd *Validator) Negative(num string) *Message {
 /**
  * validate string & positive number (>0)
  */
-func (vd *Validator) Positive (num string) *Message {
+func (vd *Validator) Positive(num string) *Message {
 	return vd.Match(`^[1-9]\d*$`, num)
 }
 
 /**
  * validate string & float number
  */
-func (vd *Validator) Float (num string) *Message {
+func (vd *Validator) Float(num string) *Message {
 	return vd.Match(`^-?\d+\.\d+$`, num)
 }
 
 /**
  * validate chinese characters
  */
-func (vd *Validator) Chinese (str string) *Message {
+func (vd *Validator) Chinese(str string) *Message {
 	return vd.Match(`^[\u4e00-\u9fa5]+$`, str)
 }
 
 /**
  * Determine whether a string is in an array
  */
-func (vd *Validator) RangeString (str string, array []string) *Message {
+func (vd *Validator) RangeString(str string, array []string) *Message {
 	ok := false
 
 	for _, v := range array {
@@ -284,7 +284,7 @@ func (vd *Validator) RangeString (str string, array []string) *Message {
 /**
  * Determine whether a number is in an array
  */
-func (vd *Validator) RangeInt (num int, array []int) *Message {
+func (vd *Validator) RangeInt(num int, array []int) *Message {
 	ok := false
 
 	for _, v := range array {
@@ -300,7 +300,7 @@ func (vd *Validator) RangeInt (num int, array []int) *Message {
 /**
  * Determine whether a float number is in an array
  */
-func (vd *Validator) RangeFloat (num float64, array []float64) *Message {
+func (vd *Validator) RangeFloat(num float64, array []float64) *Message {
 	ok := false
 
 	for _, v := range array {
@@ -316,14 +316,14 @@ func (vd *Validator) RangeFloat (num float64, array []float64) *Message {
 /**
  * regular expression matching
  */
-func (vd *Validator) Match (pattern string, str string) *Message {
-	return vd.MatchBool(regexp.MustCompile(pattern).MatchString(str));
+func (vd *Validator) Match(pattern string, str string) *Message {
+	return vd.MatchBool(regexp.MustCompile(pattern).MatchString(str))
 }
 
 /**
  * regular expression matching
  */
-func (vd *Validator) MatchBool (bool bool) *Message {
+func (vd *Validator) MatchBool(bool bool) *Message {
 	m := NewMessage(bool)
 
 	vd.Messages = append(vd.Messages, m)
@@ -334,7 +334,7 @@ func (vd *Validator) MatchBool (bool bool) *Message {
 /**
  * verification results
  */
-func (vd *Validator) Validate () (bool, string) {
+func (vd *Validator) Validate() (bool, string) {
 	m := vd.GetMessages()
 
 	if len(m) == 0 {
@@ -347,7 +347,7 @@ func (vd *Validator) Validate () (bool, string) {
 /**
  * return message slice
  */
-func (vd *Validator) GetMessages () []string {
+func (vd *Validator) GetMessages() []string {
 	m := make([]string, 0)
 
 	for _, msg := range vd.Messages {
